@@ -1,8 +1,5 @@
 package org.example.issuetracker.configuration.exception;
 
-/**
- * Created by Ftoum on 26/09/2017.
- */
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

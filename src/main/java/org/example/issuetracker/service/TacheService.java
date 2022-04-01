@@ -32,7 +32,7 @@ public class TacheService {
     public List<Tache> findAll() {
         logger.info("> findAll");
 
-        counterService.counter("services.issueservice.findAll.invoked");
+        counterService.counter("services.tacheservice.findAll.invoked");
 
 
         List<Tache> taches = tacheRepository.findAll();
@@ -50,7 +50,7 @@ public class TacheService {
     public Optional<Tache> find(UUID id) {
         logger.info("> find id:{}", id);
 
-        counterService.counter("services.issueservice.find.invoked");
+        counterService.counter("services.tacheservice.find.invoked");
 
         Optional<Tache> issue = tacheRepository.findById(id);
 
@@ -66,7 +66,7 @@ public class TacheService {
     public Tache create(Tache tache) {
         logger.info("> create");
 
-        counterService.counter("services.issueservice.create.invoked");
+        counterService.counter("services.tacheservice.create.invoked");
 
         Tache persistedTache = tacheRepository.save(tache);
 
@@ -82,7 +82,7 @@ public class TacheService {
     public Tache update(Tache tache) {
         logger.info("> update");
 
-        counterService.counter("services.issueservice.update.invoked");
+        counterService.counter("services.tacheservice.update.invoked");
 
         Tache updatedTache = tacheRepository.save(tache);
 
@@ -97,7 +97,7 @@ public class TacheService {
     public void delete(UUID id) {
         logger.info("> delete");
 
-        counterService.counter("services.issueservice.delete.invoked");
+        counterService.counter("services.tacheservice.delete.invoked");
 
         tacheRepository.deleteById(id);
 

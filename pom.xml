@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example.issuetracker</groupId>
-    <artifactId>tache-tracker-ws</artifactId>
+    <artifactId>issue-tracker-ws</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>

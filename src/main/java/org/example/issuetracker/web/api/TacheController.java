@@ -37,10 +37,10 @@ public class TacheController {
 
 
     /**
-     * Retourne la liste des issues
+     * Retourne la liste des taches
      */
     @GetMapping(value = "/issues", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<TacheDto> getAllIssues(@RequestParam(required = false, value = "status") final String status,
+    public ResponseEntity<TacheDto> getAlltaches(@RequestParam(required = false, value = "status") final String status,
                                                  @RequestParam(required = false, value = "effort_gte") final Integer effortGte,
                                                  @RequestParam(required = false, value = "effort_lte") final Integer effortLte) {
         TacheDto tacheDto = new TacheDto();
@@ -48,16 +48,16 @@ public class TacheController {
             List<Tache> taches = tacheService.findAll();
 
             if (status != null) {
-                logger.info("> getAllIssues with status : " + status);
-                taches = taches.stream().filter(getIssueWithStatus(status)).collect(toList());
+                logger.info("> getAllTaches with status : " + status);
+                taches = taches.stream().filter(getTacheWithStatus(status)).collect(toList());
             }
             if (effortLte != null) {
-                logger.info("> getAllIssues with effort lower than : " + effortLte);
-                taches = taches.stream().filter(getIssueWithEffortLowerThan(effortLte)).collect(toList());
+                logger.info("> getAllTaches with effort lower than : " + effortLte);
+                taches = taches.stream().filter(getTacheWithEffortLowerThan(effortLte)).collect(toList());
             }
             if (effortGte != null) {
-                logger.info("> getAllIssues with effort greater than : " + effortGte);
-                taches = taches.stream().filter(getIssueWithEffortGreaterThan(effortGte)).collect(toList());
+                logger.info("> getAllTaches with effort greater than : " + effortGte);
+                taches = taches.stream().filter(getTacheWithEffortGreaterThan(effortGte)).collect(toList());
             }
 
             tacheDto.setRecords(taches);
@@ -67,20 +67,20 @@ public class TacheController {
             return new ResponseEntity<>(tacheDto, INTERNAL_SERVER_ERROR);
         }
 
-        logger.info("< getAllIssues");
+        logger.info("< getAllTaches");
         return new ResponseEntity<>(tacheDto, OK);
     }
 
-    private Predicate<Tache> getIssueWithStatus(String status) {
-        return issue -> issue.getStatus().equals(TacheStatus.fromStatus(status));
+    private Predicate<Tache> getTacheWithStatus(String status) {
+        return tache -> tache.getStatus().equals(TacheStatus.fromStatus(status));
     }
 
-    private Predicate<Tache> getIssueWithEffortLowerThan(Integer effortLte) {
-        return issue -> issue.getEffort() < effortLte;
+    private Predicate<Tache> getTacheWithEffortLowerThan(Integer effortLte) {
+        return tache -> tache.getEffort() < effortLte;
     }
 
-    private Predicate<Tache> getIssueWithEffortGreaterThan(Integer effortGte) {
-        return issue -> issue.getEffort() > effortGte;
+    private Predicate<Tache> getTacheWithEffortGreaterThan(Integer effortGte) {
+        return tache -> tache.getEffort() > effortGte;
     }
 
 
@@ -96,13 +96,13 @@ public class TacheController {
      * @return
      */
     @GetMapping(value = "/issues/{id}")
-    public ResponseEntity getIssue(@PathVariable("id") UUID id) {
-        logger.info("> getIssue with id : " + id);
+    public ResponseEntity getTache(@PathVariable("id") UUID id) {
+        logger.info("> getTache with id : " + id);
 
-        verifyIssue(id);
-        Optional<Tache> issue = tacheService.find(id);
+        verifyTache(id);
+        Optional<Tache> tache = tacheService.find(id);
 
-        return new ResponseEntity<>(issue, OK);
+        return new ResponseEntity<>(tache, OK);
     }
 
 
@@ -113,8 +113,8 @@ public class TacheController {
      * @return
      */
     @PostMapping(value = "/issues", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Tache> createIssue(@RequestBody Tache tache) {
-        logger.info("> createIssue");
+    public ResponseEntity<Tache> createTache(@RequestBody Tache tache) {
+        logger.info("> createTache");
 
         Tache createdTache;
         try {
@@ -124,46 +124,46 @@ public class TacheController {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
 
-        logger.info("< createIssue");
+        logger.info("< createTache");
         return new ResponseEntity<>(createdTache, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/issues/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Tache> updateIssue(@RequestBody Tache tache) {
-        logger.info("> updateIssue");
+    public ResponseEntity<Tache> updateTache(@RequestBody Tache tache) {
+        logger.info("> updateTache");
 
         Tache updatedTache;
         try {
-            verifyIssue(tache.getId());
+            verifyTache(tache.getId());
             updatedTache = tacheService.update(tache);
         } catch (Exception e) {
             logger.error(ERROR, e);
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
 
-        logger.info("< updateIssue");
+        logger.info("< updateTache");
         return new ResponseEntity<>(updatedTache, OK);
     }
 
     @DeleteMapping(value = "/issues/{id}")
-    public ResponseEntity<Tache> deleteIssue(@PathVariable("id") UUID issueId) {
-        logger.info("> deleteIssue");
+    public ResponseEntity<Tache> deleteTache(@PathVariable("id") UUID tacheId) {
+        logger.info("> deleteTache");
 
         try {
-            verifyIssue(issueId);
-            tacheService.delete(issueId);
+            verifyTache(tacheId);
+            tacheService.delete(tacheId);
         } catch (Exception e) {
             logger.error(ERROR, e);
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
 
-        logger.info("< deleteIssue");
+        logger.info("< deleteTache");
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-    // if no issue found, return 404 status code
-    protected void verifyIssue(UUID issueId) throws ResourceNotFoundException {
-        tacheService.find(issueId)
-                .orElseThrow(() -> new ResourceNotFoundException("Issue with id " + issueId + " not found"));
+    // if no tache found, return 404 status code
+    protected void verifyTache(UUID tacheId) throws ResourceNotFoundException {
+        tacheService.find(tacheId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tache with id " + tacheId + " not found"));
     }
 }

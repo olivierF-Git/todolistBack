@@ -6,9 +6,6 @@ import org.example.issuetracker.model.Tache;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ftoum on 19/09/2017.
- */
 public class TacheDto {
 
     @JsonProperty("_metadata")

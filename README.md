@@ -26,10 +26,10 @@ http://localhost:9191/api/taches?effort_gte=4&effort_lte=16
 
 # Construction et lancement du conteneur Docker
 
-docker build -t ggn/tache-tracker-ws .
+docker build -t ggn/issue-tracker-ws .
 
-docker run -it --rm -p 9191:9191 ggn/tache-tracker-ws /bin/bash
+docker run -it --rm -p 9191:9191 ggn/issue-tracker-ws /bin/bash
 
 Une fois le conteneur lancé, exécuter ensuite : (on est dans le répertoire /opt/issue_tracker_ws)
 
-java -jar target/tache-tracker-ws-1.0-SNAPSHOT.jar
+java -jar target/issue-tracker-ws-1.0-SNAPSHOT.jar
